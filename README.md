@@ -12,9 +12,9 @@ $ docker-compose up -d
 ```
 <br>
 
-コンテナに入る コンテナ名は今回は「centos」
+コンテナに入る サービス名はDockerfileで記載してある「centos」
 ```
-  docker-compose exec コンテナ名 bash
+  docker-compose exec サービス名 bash
 ```
 <br>
 
@@ -50,4 +50,30 @@ ports:
 コマンド 再度ビルドして起動
 ```
 $ docker-compose up --build -d
+```
+
+<br>
+
+## MySQLのパスワード変更
+
+初期パスワード確認
+```
+$ cat /var/log/mysqld.log | grep password
+```
+
+<br>
+
+パスワードポリシー変更
+```
+$ set global validate_password_length=4;
+$ set global validate_password_mixed_case_count=0;
+$ set global validate_password_number_count=0;
+$ set global validate_password_policy=LOW;
+```
+
+<br>
+
+パスワード変更
+```
+$ SET PASSWORD FOR root@localhost=password('パスワード');
 ```
